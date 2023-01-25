@@ -1,7 +1,6 @@
 #these are the libraries used for these sns.twitter scrape methods using a customizes streamlit website
 import streamlit as st
 import base64
-from streamlit_option_menu import option_menu
 from PIL import Image
 import snscrape.modules.twitter as sntwitter
 import numpy as np
@@ -12,6 +11,7 @@ from wordcloud import WordCloud
 from wordcloud import STOPWORDS
 import pandas as pd
 from pymongo import MongoClient
+from streamlit_option_menu import option_menu
 
 #connecting MongoDB-Database and creating a collection
 conn = MongoClient("mongodb+srv://danavasanth:Krishnaveni@cluster0.0azflq3.mongodb.net/?retryWrites=true&w=majority")
