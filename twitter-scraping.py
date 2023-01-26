@@ -18,7 +18,7 @@ conn = MongoClient("mongodb+srv://danavasanth:Krishnaveni@cluster0.0azflq3.mongo
 db = conn["snscrape"]
 coll = db["twitter-data"]
 img = Image.open("media/twitter.png")
-st.set_page_config(page_title="Twitter scraping",page_icon = img,layout="wide")
+st.set_page_config(page_title="Twitter scraping",page_icon = img)
 
 #This is used to make the streamlit web-page customized
 def get_img_as_base64(file):
