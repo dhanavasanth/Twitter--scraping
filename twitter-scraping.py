@@ -175,9 +175,12 @@ if choice=="Data-Base":
     list = ['',"store in data-base","view as data-frame"]
     CHOICE = st.selectbox("SELECT",list)
     if CHOICE=="store in data-base":
-        n_word = st.text_input("Enter the KEY-WORD")
-        Bird_In_Database(n_word)
-        if st.button("upload"):
+        if "n_word" not in st.session_state:
+            st.session_state["n_word"] = ""
+        n_word = st.text_input("Enter the KEY-WORD",st.session_state["n_word"])
+        upload = st.button("upload")
+        if upload:
+            Bird_In_Database(n_word)
             st.success("Your DATA-BASE has been UPDATED SUCCESSFULLY :smiley:")
             col1,col2,col3=st.columns(3)
             col1.image(Image.open("media/jerry-cheese.png"))
