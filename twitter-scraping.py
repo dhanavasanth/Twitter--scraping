@@ -102,7 +102,9 @@ if choice=="Home":
 #It enables user to search the key-word , from date , to date and no of datas
 if choice=="Search":
     col1,col2,col3 = st.columns(3)
+    col1.image(Image.open("media/blue-tick.png"),width = 250)
     col2.image(Image.open("media/search.png"),width = 400)
+    col3.image(Image.open("media/database.png"),width= 250)                     
     word = st.text_input("Enter Word to Search")
     if word:
         From = st.date_input("From Date")
