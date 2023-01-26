@@ -17,7 +17,7 @@ from streamlit_option_menu import option_menu
 conn = MongoClient("mongodb+srv://danavasanth:Krishnaveni@cluster0.0azflq3.mongodb.net/?retryWrites=true&w=majority")
 db = conn["snscrape"]
 coll = db["twitter-data"]
-img = Image.open("twitter.png")
+img = Image.open("media/twitter.png")
 st.set_page_config(page_title="Twitter scraping",page_icon = img,layout="wide")
 
 #This is used to make the streamlit web-page customized
@@ -25,7 +25,7 @@ def get_img_as_base64(file):
     with open(file,"rb") as f:
         data = f.read()
     return base64.b64encode(data).decode()
-img = get_img_as_base64("twitter-splash.jpg")
+img = get_img_as_base64("image/twitter-splash.jpg")
 page_bg_img = f"""
 <style>
 [data-testid="stAppViewContainer"] > .main {{
@@ -57,14 +57,14 @@ def ScrapingTheBird(word,From,To,maxTweets):
 def word_cloud():
     stopwords = set(STOPWORDS)
     data = pd.read_csv("user-tweets.csv")
-    mask = np.array(Image.open("tweetie.png"))
+    mask = np.array(Image.open("media/tweetie.png"))
     text = " ".join(review for review in data.Content)
     wordcloud = WordCloud(background_color = "white",max_words=500,mask=mask).generate(text)
     plt.figure()
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis("off")
     plt.show()
-    plt.savefig("word-cloud.png",format="png")
+    plt.savefig("media/word-cloud.png",format="png")
     return plt.show()
 
 #It is to upload the search document in Mongodb database
@@ -95,9 +95,9 @@ choice = option_menu(
 #It remains default web-page
 if choice=="Home":
     col1, col2,col3 = st.columns(3)
-    col1.image(Image.open("tweet.png"),width = 500)
+    col1.image(Image.open("media/tweet.png"),width = 500)
     col2.header("“There are NO magic wands, NO hidden tracks, NO secret handshakes that can bring you immediate success..! But with Time, Energy and Determination you can get there...!”")
-    col3.image(Image.open("smiles.png"),width = 500)
+    col3.image(Image.open("media/smiles.png"),width = 500)
 
 #It enables user to search the key-word , from date , to date and no of datas
 if choice=="Search":
@@ -113,35 +113,35 @@ if choice=="Search":
                     if check:
                         st.dataframe(ScrapingTheBird(word,From,To,maxTweets).iloc[0:10])
                         col1, col2 = st.columns(2)
-                        col1.image(Image.open("smiles.png"))
-                        col2.image(Image.open("thumbsup.png"))
+                        col1.image(Image.open("media/smiles.png"))
+                        col2.image(Image.open("media/thumbsup.png"))
                         st.snow()
 
 #It enables user to visualize the data in wordcloud form with similar tag's
 if choice=="Visualize":
     col1,col2,col3= st.columns(3)
     col1 = (st.button("Click to here to Release :bird:"))
-    col2.image(Image.open("cage bird.png"),width = 250)
+    col2.image(Image.open("media/cage bird.png"),width = 250)
     if (col1):
         st.balloons()
         word_cloud()
-        col3.image(Image.open("word-cloud.png"))
+        col3.image(Image.open("media/word-cloud.png"))
 
 #It enables user to download the search data in JSON or CSV file
 if choice=="Download":
     col1,col2,= st.columns(2)
-    col1.image(Image.open("bell.png"),width = 300)
+    col1.image(Image.open("media/bell.png"),width = 300)
     col2.header("*You can Download the previous search data ( or ) You can search for new-data")
     choice1 = ["--SELECT-OPTIONS--", "Pre-Search-data", "New-Search"]
     menu=st.selectbox("SELECT", choice1)
     if menu=="Pre-Search-data":
         with open("user-tweets.csv") as CSV:
             if st.download_button("DOWNLOAD THE BIRD IN --> .csv ",CSV,file_name="My-Blue-Bird.csv"):
-                st.image("baby-right.png",width = 250)
+                st.image("media/baby-right.png",width = 250)
                 st.success("My-Blue-Bird.csv..! has been downloaded")
         with open("user-tweets.json") as JSON:
             if st.download_button("DOWNLOAD THE BIRD IN --> .json",JSON,file_name="My-Blue-Bird.json"):
-                st.image("baby-left.png",width = 250)
+                st.image("media/baby-left.png",width = 250)
                 st.success("My-Blue-Bird.json..! has been downloaded")
 
     if menu=="New-Search":
@@ -164,8 +164,8 @@ if choice=="Download":
 #It is to upload the search data into mongodb database
 if choice=="Data-Base":
     col1,col2,col3 = st.columns(3)
-    col1.image(Image.open("data-base.png"),width = 250)
-    col3.image(Image.open("Mongodb.png"))
+    col1.image(Image.open("media/data-base.png"),width = 250)
+    col3.image(Image.open("media/Mongodb.png"))
     col2.header("You can ADD your Previous Search DATA into MongoDB data base to work with Cloud-Network")
 
     list = ['',"store in data-base","view as data-frame"]
@@ -176,9 +176,9 @@ if choice=="Data-Base":
         if st.button("upload"):
             st.success("Your DATA-BASE has been UPDATED SUCCESSFULLY :smiley:")
             col1,col2,col3=st.columns(3)
-            col1.image(Image.open("jerry-cheese.png"))
+            col1.image(Image.open("media/jerry-cheese.png"))
             col2.header("THANKS FOR THE CHEESE..!")
-            col3.image(Image.open("tom.png"))
+            col3.image(Image.open("media/tom.png"))
     if CHOICE=="view as data-frame":
         if st.button("view :goggles:"):
             df = pd.read_csv("user-tweets.csv")
@@ -188,14 +188,14 @@ if choice=="Data-Base":
 #It is to know what is sns-crape
 if choice=="About":
     col1,col2,col3,col4,col5,col6,col7,col8 = st.columns(8)
-    col1.image(Image.open("facebook.png"))
-    col2.image(Image.open("whatsapp.png"))
-    col3.image(Image.open("vibe.png"),width = 300)
-    col4.image(Image.open("instagram.png"))
-    col5.image(Image.open("twitter.png"))
-    col6.image(Image.open("youtube.png"),width=250)
-    col7.image(Image.open("telegram.png"))
-    col8.image(Image.open("mail.png"))
+    col1.image(Image.open("media/facebook.png"))
+    col2.image(Image.open("media/whatsapp.png"))
+    col3.image(Image.open("media/vibe.png"),width = 300)
+    col4.image(Image.open("media/instagram.png"))
+    col5.image(Image.open("media/twitter.png"))
+    col6.image(Image.open("media/youtube.png"),width=250)
+    col7.image(Image.open("media/telegram.png"))
+    col8.image(Image.open("media/mail.png"))
     st.subheader("Twitter is a social media platform that allows users to post and interact with short messages called tweets." 
                 "Tweets can include text, images, and videos, and have a 280-character limit. " 
                 "Users can follow other users, view and respond to tweets, and use hashtags to categorize and find tweets on specific topics. "  
@@ -207,7 +207,7 @@ if choice=="About":
                            " It can be used to scrape data from websites such as Twitter, Instagram, and Facebook."
                            " The data that can be scraped includes information such as user profiles, posts, and comments. snscrape can be used to scrape data for research, data analysis, or other purposes."
                            " It was created using Python and can be run on Windows, macOS, and Linux. Some of the key features of snscrape include the ability to scrape data for specific users, hashtags, and keywords, and the ability to save the scraped data in various formats such as CSV, JSON, and SQLite.")
-        col2.image(Image.open("sns.png"),width = 600)
+        col2.image(Image.open("media/sns.png"),width = 600)
         st.success("OK..It's time to caught the BIRD :gun: ")
         st.balloons()
 
@@ -224,8 +224,8 @@ if choice=="Contact":
 
     }
     col1,col2,col3= st.columns(3)
-    col1.image(Image.open("space.png"),width = 500)
-    col2.image(Image.open("my.png"),width = 400)
+    col1.image(Image.open("media/space.png"),width = 500)
+    col2.image(Image.open("media/my.png"),width = 400)
     with col3:
         st.title(name)
         st.write("---")
